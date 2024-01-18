@@ -1,2 +1,5 @@
 firestore_key.json
 __pycache__/
+downloaded_keys.env
+keys.env
+drive_key.json
