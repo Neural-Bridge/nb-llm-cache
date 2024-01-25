@@ -12,6 +12,30 @@ Before using `FirestoreCache` or `LocalCache`, ensure you have the required pack
 pip install -r requirements.txt
 ```
 
+## Repository Setup
+
+1. **Download Configuration Files**:
+
+   - Download the `drive_key.json` file from [this link](https://drive.google.com/file/d/1dN7uOMMI1lxTciWrnUGTOZtG4ybF1PmA/view?usp=sharing) and place it in the root folder of your project.
+   - Download the `.env` file from [this link](https://drive.google.com/file/d/11XhcOHC_OyfD7FrCEdiJrOj2BKySEHqa/view?usp=sharing) and place it in the root folder of your project.
+   - Download the firestore_key.json from [this link](https://drive.google.com/drive/folders/10CvwHwZV0TOsjNseTq4svK2kKUw_7qVR?usp=drive_link) and place it in the root folder of your project.
+
+2. **Set Up Environment Variables**:
+
+   - To set the environment variables, run the following command in your terminal:
+
+     ```bash
+     source .env
+     ```
+
+3. **Configure Git Hooks**:
+
+   - To set up the Git hooks, make the `setup_hooks.sh` script executable and run it by executing the following command:
+
+     ```bash
+     chmod +x hooks_management/setup_hooks.sh && hooks_management/setup_hooks.sh
+     ```
+
 ## Configuration
 
 ### FirestoreCache Configuration
@@ -88,3 +112,11 @@ A demo script is provided to showcase the usage of `FirestoreCache` and `LocalCa
    ```bash
    python3 demo.py
    ```
+
+## Important Note
+
+If you updated your local .env file, you need to update the .env file in Google Drive. To do so, run the following command in your terminal from the root folder of the project:
+
+```bash
+python3 hooks_management/update_env.py
+```

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Path to the Python script relative to the root of the repo
+SCRIPT="hooks_management/compare.py"
+
+# Execute the Python script and capture its output
+output=$(python3 "$SCRIPT" 2>&1)
+exit_status=$?
+
+# Check the exit code
+if [ $exit_status -ne 0 ]; then
+    echo "Pre-push check failed. Push aborted."
+    echo "Script output:"
+    echo "$output"
+    exit 1
+fi
+
+# If all checks pass, allow the push to continue
+exit 0
+
