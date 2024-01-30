@@ -104,11 +104,10 @@ Before running the demo, ensure you have a writable JSON file path specified for
 
 ### Running the Demos
 
-To run these demos, from root folder execute the scripts:
+To run these demos, first you need to install the OpenAI Python library and set up OPENAI_API_KEY environment variable. Then from root folder execute the scripts:
 
 ```bash
+pip install openai==1.3.7
 python3 -m demos.firestore_demo.py
 python3 -m demos.local_demo.py
 ```
-
-Ensure you have the necessary dependencies installed, including the OpenAI Python library for API interactions.

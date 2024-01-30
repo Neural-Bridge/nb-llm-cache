@@ -22,7 +22,7 @@ firestore_service_account_file = "firestore_key.json"
 firestore_cache: DBIntegrationInterface = FirestoreCache(collection_name=collection_name,
                                                          firestore_service_account_file=firestore_service_account_file)
 llm_cache = LLMCache(firestore_cache)
-print("DEMO FOR FIRESTORE CACHE") 
+print("DEMO FOR FIRESTORE CACHE")
 print("------------------------")
 
 start_time = time.time()
