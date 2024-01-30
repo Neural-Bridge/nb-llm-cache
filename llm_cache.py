@@ -1,7 +1,7 @@
 """
-This module implements the LLMCache class, which is a subclass of the CacheInterface class.
+This module implements the LLMCache class.
 """
-from kv_store_interface import KVStoreInterface
+from db_integration_interface import DBIntegrationInterface
 from typing import Callable, Any
 import json
 import hashlib
@@ -15,14 +15,14 @@ class LLMCache():
   """
   A caching layer that cache function responses based on the function's arguments.
   """
-  def __init__(self, kv: KVStoreInterface):
+  def __init__(self, db: DBIntegrationInterface):
     """
-    Initializes the LLMCache instance with a key-value store.
+    Initializes the LLMCache instance with a DBIntegrationInterface.
 
     Args:
-      kv (KVStoreInterface): An instance of a class that implements the KVStoreInterface.
+      db (DBIntegrationInterface): An instance of a class that implements the DBIntegrationInterface.
     """
-    self.kv = kv
+    self.db = db
 
   def call(self, func: Callable,
            exclude_cache_params=None,
@@ -68,7 +68,8 @@ class LLMCache():
     logger.info("No cached result found. Calling function.")
     try:
       response = func(**kwargs)
-      self.kv.add_to_cache(cache_key, {"response": response, "cache_params": cache_params})
+      value = json.dumps({"response": response, "cache_params": cache_params})
+      self.db.add_to_cache(cache_key, value)
       return response
     except Exception as e:
       logger.error(f"Error calling function with name {func_name}: {e}")
@@ -99,7 +100,15 @@ class LLMCache():
     """
     cache_key = self._generate_cache_key(func_name, cache_params)
     try:
-      return self.kv.get_from_cache(key=cache_key, cache_params=cache_params), cache_key
+      result = self.db.get_from_cache(cache_key)
+      if not result:
+        return None, cache_key
+      result_dict = json.loads(result)
+      cache_params_db = result_dict["cache_params"]
+      response = result_dict["response"]
+      if cache_params_db == cache_params:
+        return response, cache_key
+      return None, cache_key
     except Exception as e:
       logger.error(f"Error getting from cache: {e}")
       return None, cache_key

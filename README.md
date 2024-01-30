@@ -1,122 +1,114 @@
-# FirestoreCache and LocalCache Modules
+# LLM Cache
 
-## Introduction
+## Overview
 
-`FirestoreCache` and `LocalCache` are Python modules that implement caching functionality. `FirestoreCache` uses Google Firestore as the backend, while `LocalCache` uses a local JSON file. Both are designed as subclasses of the `CacheInterface` class, providing methods for storing, retrieving, and managing cached data.
+LLM Cache is a Python-based caching system designed to efficiently store and retrieve data for various applications. This project includes implementations for both local file-based caching and cloud-based caching using Firestore, as well as an interface for database integration.
+
+## Modules
+
+### DBIntegrationInterface
+
+- **Purpose**: Defines the interface for a cache.
+- **Description**: This abstract class outlines the basic structure for cache implementations, specifying methods for retrieving (`get_from_cache`) and adding data (`add_to_cache`) to the cache.
+
+### FirestoreCache
+
+- **Purpose**: Implements caching using Google Cloud Firestore.
+- **Description**: Extends `DBIntegrationInterface` to provide a caching solution using Firestore, suitable for distributed systems and cloud-based applications.
+
+### LocalCache
+
+- **Purpose**: Implements caching using a local JSON file.
+- **Description**: Extends `DBIntegrationInterface` to offer a simple, file-based caching mechanism, ideal for lightweight applications or environments where cloud access is limited.
+
+### LLMCache
+
+- **Purpose**: A caching layer for function responses.
+- **Description**: This class uses a `DBIntegrationInterface` to cache and retrieve responses of functions based on their arguments. It supports features like retrying function calls and excluding specific arguments from cache keys.
+
+## Features
+
+- **Versatile Caching**: Supports both local (JSON file) and remote (Firestore) caching.
+- **Function Response Caching**: Optimizes performance by caching the results of function calls.
+- **Retry Mechanism**: Includes a retry logic with backoff intervals for failed function calls.
+- **Customizable**: Allows exclusion of certain parameters from the cache key.
+- **Error Handling**: Robust error handling with custom exceptions for both local and Firestore caches.
 
 ## Installation
 
-Before using `FirestoreCache` or `LocalCache`, ensure you have the required packages installed:
+To use LLM Cache in your project, clone this repository and install the required dependencies:
 
 ```bash
+git clone https://github.com/Neural-Bridge/llm-cache.git
+cd llm-cache
 pip install -r requirements.txt
 ```
 
-## Repository Setup
-
-1. **Download Configuration Files**:
-
-   - Download the `drive_key.json` file from [this link](https://drive.google.com/file/d/1dN7uOMMI1lxTciWrnUGTOZtG4ybF1PmA/view?usp=sharing) and place it in the root folder of your project.
-   - Download the `.env` file from [this link](https://drive.google.com/file/d/11XhcOHC_OyfD7FrCEdiJrOj2BKySEHqa/view?usp=sharing) and place it in the root folder of your project.
-   - Download the firestore_key.json from [this link](https://drive.google.com/drive/folders/10CvwHwZV0TOsjNseTq4svK2kKUw_7qVR?usp=drive_link) and place it in the root folder of your project.
-
-2. **Set Up Environment Variables**:
-
-   - To set the environment variables, run the following command in your terminal:
-
-     ```bash
-     source .env
-     ```
-
-3. **Configure Git Hooks**:
-
-   - To set up the Git hooks, make the `setup_hooks.sh` script executable and run it by executing the following command:
-
-     ```bash
-     chmod +x hooks_management/setup_hooks.sh && hooks_management/setup_hooks.sh
-     ```
-
-## Configuration
-
-### FirestoreCache Configuration
-
-To use `FirestoreCache`, you must have a Google Cloud Firestore project set up. Follow these steps to configure your environment:
-
-1. Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
-2. Set up Firestore in your Firebase project.
-3. Generate a new private key for your Firebase service account.
-4. Download the key JSON file (`firestore_key.json`) and place it in the root folder of your project.
-
-### LocalCache Configuration
-
-To use `LocalCache`, specify the path to a local JSON file. If the file does not exist, it will be created automatically.
-
 ## Usage
 
-### Basic Usage of FirestoreCache
+1. **Initialization**:
 
-To use the `FirestoreCache` class, import it into your Python script and initialize it with the name of your Firestore collection:
+   - Initialize the desired cache implementation (FirestoreCache or LocalCache) by providing necessary parameters like collection name or file path.
+   - Instantiate LLMCache with the cache object.
 
-```python
-from firestore_cache import FirestoreCache
+2. **Caching Function Calls**:
 
-# Initialize FirestoreCache with your Firestore collection name
-cache = FirestoreCache("my_collection")
-```
+   - Use `LLMCache.call()` to call a function and cache its response. You can specify parameters to exclude from the cache key and define retry logic.
 
-### Basic Usage of LocalCache
+3. **Retrieving and Storing Data**:
+   - Use `get_from_cache` and `add_to_cache` methods from your cache implementation to directly interact with the cache.
 
-To use the `LocalCache` class, import it into your Python script and specify the path to your local JSON file:
-
-```python
-from local_cache import LocalCache
-
-# Initialize LocalCache with the path to your local JSON file
-cache = LocalCache("path/to/cache.json")
-```
-
-### Common Usage
-
-You can use the `call` method to interact with the cache for both `FirestoreCache` and `LocalCache`:
+## Example
 
 ```python
-def my_function(param1, param2, param3):
-    return param1 + param2
+# Example of using LLMCache with LocalCache
+from db_integrations.local_cache import LocalCache
+from db_integration_interface import DBIntegrationInterface
+from llm_cache import LLMCache
 
-# Example using FirestoreCache or LocalCache
-result = cache.call(my_function, param1="Hello, ", param2="world!", exclude_cache_params=["param3"])
-print(result)
+# Initialize the LocalCache
+cache_file_path = "test_cache.json"
+local_cache: DBIntegrationInterface = LocalCache(file_path=cache_file_path)
+llm_cache = LLMCache(local_cache)
+
+# Function to cache
+def example_function(param1, param2):
+    # Function logic
+    return result
+
+# Using LLMCache to call and cache the function response
+response = llm_cache.call(example_function,
+                          param1=value1,
+                          param2=value2,
+                          exclude_params=['param2'],
+                          num_retries_call=2, # Retry twice if function call fails
+                          backoff_intervals_call=[5, 10] # Wait 5s and 10s before retrying
+                          )
 ```
 
-### Running the Demo
+## Demos
 
-A demo script is provided to showcase the usage of `FirestoreCache` and `LocalCache`. To run the demo, follow these steps:
+The `llm_cache` project contains two demonstration scripts located in the `demos` folder to showcase the usage of `FirestoreCache` and `LocalCache`.
 
-#### For FirestoreCache
+### FirestoreCache Demo (`firestore_demo.py`)
 
-1. Place your `firestore_key.json` file in the root folder of the project.
-2. Set the environment variable for the Firestore credentials by running:
+This demo illustrates how to use the `FirestoreCache` with the `LLMCache` to cache responses from OpenAI's GPT-4 model. The script demonstrates the caching functionality and latency improvements when making repeated calls to the same API endpoint with identical parameters.
 
-   ```bash
-   source keys.env
-   ```
+To run the FirestoreCache demo, ensure you have the Firestore service account file and update the `firestore_service_account_file` variable accordingly. The script measures and prints the latency for the first and second calls to highlight the caching effect.
 
-#### For LocalCache
+### LocalCache Demo (`local_demo.py`)
 
-1. Ensure the path to your local JSON file is correctly set in the demo script.
+This demo shows the use of `LocalCache` with `LLMCache` to cache responses from the GPT-4 model locally. Similar to the FirestoreCache demo, it demonstrates the latency benefits when caching is applied to repeated API requests.
 
-#### Run the Demo
+Before running the demo, ensure you have a writable JSON file path specified for the local cache. The script then performs API calls and prints out the latency for each call to showcase the effectiveness of the local cache.
 
-3. Run the demo script:
+### Running the Demos
 
-   ```bash
-   python3 demo.py
-   ```
-
-## Important Note
-
-If you updated your local .env file, you need to update the .env file in Google Drive. To do so, run the following command in your terminal from the root folder of the project:
+To run these demos, from root folder execute the scripts:
 
 ```bash
-python3 hooks_management/update_env.py
+python3 -m demos.firestore_demo.py
+python3 -m demos.local_demo.py
 ```
+
+Ensure you have the necessary dependencies installed, including the OpenAI Python library for API interactions.
