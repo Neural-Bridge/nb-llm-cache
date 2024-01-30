@@ -1,6 +1,3 @@
 firestore_key.json
 __pycache__/
-drive_key.json
 .DS_Store
-drive.env
-.env
