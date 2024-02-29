@@ -1,1 +1,2 @@
 google-cloud==0.34.0
+google-auth==2.27.0
