@@ -1,7 +1,7 @@
 """Demo for FirestoreCache"""
-from db_integrations.firestore_cache import FirestoreCache
-from db_integration_interface import DBIntegrationInterface
-from llm_cache import LLMCache
+from ..db_integrations.firestore_cache import FirestoreCache
+from ..db_integration_interface import DBIntegrationInterface
+from ..llm_cache import LLMCache
 import openai
 import time
 

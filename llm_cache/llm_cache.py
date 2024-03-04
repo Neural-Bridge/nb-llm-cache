@@ -1,7 +1,7 @@
 """
 This module implements the LLMCache class.
 """
-from db_integration_interface import DBIntegrationInterface
+from .db_integration_interface import DBIntegrationInterface
 from typing import Callable, Any
 import json
 import hashlib
@@ -86,7 +86,7 @@ class LLMCache():
         raise
 
   def stream_call(self, func: Callable, exclude_cache_params=None,
-                    num_retries_call=3, backoff_intervals_call=None, **kwargs: Any) -> Any:
+                  num_retries_call=3, backoff_intervals_call=None, **kwargs: Any) -> Any:
     """
     Calls the specified streaming function with provided arguments, 
     caching and retrieving the response from the cache when possible.

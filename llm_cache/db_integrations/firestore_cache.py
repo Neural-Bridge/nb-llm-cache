@@ -4,7 +4,7 @@ which is a subclass of the DBIntegrationInterface class.
 """
 from google.cloud import firestore
 from google.oauth2 import service_account
-from db_integration_interface import DBIntegrationInterface
+from ..db_integration_interface import DBIntegrationInterface
 import logging
 import json
 
