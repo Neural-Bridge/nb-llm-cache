@@ -18,7 +18,6 @@ Completely Open-Source! Entirely Free! Fully Private!
 </a>
 
 </div>
----
 
 **LLMCache** is an open-source caching solution designed to operate seamlessly within your cloud infrastructure, offering custom database integrations and more than just caching. With robust features including automatic retries for enhanced reliability, it empowers developers to efficiently manage data-intensive operations. 
 
