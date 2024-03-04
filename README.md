@@ -1,6 +1,25 @@
-# LLM Cache
+<h1 align="center">
+  <img
+    src="assets/nb_logo.png"
+    height="200"
+  >
+</h1>
 
-## Overview
+<div align="center">
+
+<h2>
+Completely Open-Source! Entirely Free! Fully Private!
+</h2>
+
+<a href="https://github.com/Neural-Bridge/llm-cache/blob/main/LICENSE.md">![https://pypi.python.org/pypi/llm-cache/](https://img.shields.io/pypi/l/llm-cache.svg)</a>
+<a href="https://pypi.python.org/pypi/llm-cache/">![https://pypi.python.org/pypi/llm-cache/](https://img.shields.io/pypi/pyversions/unstructured.svg)</a>
+<a href="https://github.com/Neural-Bridge/llm-cache/blob/main/CODE_OF_CONDUCT.md">![code_of_conduct.md](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg) </a>
+<a href="https://github.com/Neural-Bridge/llm-cache/releases">![GitHub release (latest by date)](https://img.shields.io/github/release/Neural-Bridge/llm-cache.svg?cacheSeconds=3600)
+</a>
+
+</div>
+
+<!-- ## Overview
 
 LLM Cache is a Python-based caching system designed to efficiently store and retrieve data for various applications. This project includes implementations for both local file-based caching and cloud-based caching using Firestore, as well as an interface for database integration.
 
@@ -110,4 +129,4 @@ To run these demos, first you need to install the OpenAI Python library and set 
 pip install openai==1.3.7
 python3 -m demos.firestore_demo.py
 python3 -m demos.local_demo.py
-```
+``` -->
