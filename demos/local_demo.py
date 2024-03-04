@@ -1,4 +1,4 @@
-"""Demo for FirestoreCache"""
+"""Demo for LocalCache"""
 from db_integrations.local_cache import LocalCache
 from db_integration_interface import DBIntegrationInterface
 from llm_cache import LLMCache
