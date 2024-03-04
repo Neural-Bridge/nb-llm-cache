@@ -18,6 +18,38 @@ Completely Open-Source! Entirely Free! Fully Private!
 </a>
 
 </div>
+---
+
+**LLMCache** is an open-source caching solution designed to operate seamlessly within your cloud infrastructure, offering custom database integrations and more than just caching. With robust features including automatic retries for enhanced reliability, it empowers developers to efficiently manage data-intensive operations. 
+
+## ⚙️ Installation
+
+Install via pip with just one command:
+
+```
+pip install llm_cache
+```
+
+## ⭐ Features
+
+- **Customizable Database Integrations:** Out-of-the-box support for Firestore and local cache, with the flexibility for custom database integrations to meet your specific needs.
+- **Efficient Caching:** Optimizes your application by caching function responses, significantly reducing calling times and improving responsiveness.
+- **Retry Logic with Backoff Intervals:** Enhances reliability through robust retry mechanisms, including configurable backoff intervals to handle failures gracefully.
+- **Reduced Latency:** Minimizes delays in data retrieval, ensuring your application runs smoothly and efficiently.
+- **Scalable and Cloud-Ready:** Designed to seamlessly integrate with your cloud infrastructure, making it ideal for scaling applications.
+- **Open Source:** Provides the freedom to modify, extend, and tailor the solution to your project's requirements, backed by a community-driven support system.
+- **Simplified Data Handling:** Streamlines the process of storing and retrieving data, allowing for more focused development on core functionalities.
+
+
+## 🗄️ Supported Database Integrations
+
+| Cache Integration Type         | Status        |
+|--------------------------------|---------------|
+| Local Cache                    | ✅ Completed  |
+| Firestore                      | ✅ Completed  |
+| MongoDB                        | 🚧 In Progress |
+| Redis                          | 🚧 In Progress |
+
 
 <!-- ## Overview
 
