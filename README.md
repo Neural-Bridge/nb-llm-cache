@@ -190,7 +190,7 @@ Thank you for considering to contribute, and we look forward to collaborating wi
 
 ## 🔔 Subscribe to updates
 
-Stay updated with YOL by subscribing through [this form]()
+Stay updated with LLM Cache by subscribing through [this form]()
 
 ## ⚖️ License
 
