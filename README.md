@@ -14,7 +14,7 @@ Completely Open-Source! Entirely Free! Fully Private!
 <a href="https://github.com/Neural-Bridge/llm-cache/blob/main/LICENSE.md">![https://pypi.org/project/llmcache-test-nb](https://img.shields.io/pypi/l/llmcache-test-nb.svg)</a>
 <a href="https://pypi.python.org/pypi/llm-cache/">![https://pypi.org/project/llmcache-test-nb](https://img.shields.io/pypi/pyversions/llmcache-test-nb.svg)</a>
 <a href="https://github.com/Neural-Bridge/llm-cache/blob/main/CODE_OF_CONDUCT.md">![code_of_conduct.md](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg) </a>
-<a href="https://github.com/Neural-Bridge/llm-cache/releases">![GitHub release (latest by date)](https://img.shields.io/github/release/Neural-Bridge/llm-cache.svg?cacheSeconds=3600)
+<a href="https://github.com/Neural-Bridge/llm-cache/releases">![GitHub release (latest by date)](https://img.shields.io/pypi/v/llmcache-test-nb.svg?cacheSeconds=3600)
 </a>
 
 </div>
