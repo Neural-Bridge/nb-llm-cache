@@ -1,5 +1,5 @@
 """This module implements a local cache using a JSON file."""
-from db_integration_interface import DBIntegrationInterface
+from ..db_integration_interface import DBIntegrationInterface
 import json
 import logging
 import os
