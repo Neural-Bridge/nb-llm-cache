@@ -112,7 +112,7 @@ def call_openai(model,
 collection_name = "test_cache"
 firestore_service_account_file = "firestore_key.json"
 llm_cache: LLMCache = FirestoreCache(collection_name=collection_name,
-                                 firestore_service_account_file=firestore_service_account_file)
+                                     firestore_service_account_file=firestore_service_account_file)
 
 # Utilizing Firestore for caching
 res = llm_cache.call(func=call_openai,
