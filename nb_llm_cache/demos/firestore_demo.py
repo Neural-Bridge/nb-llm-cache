@@ -1,6 +1,5 @@
 """Demo for FirestoreCache"""
 from ..db_integrations.firestore_cache import FirestoreCache
-from ..db_integration_interface import DBIntegrationInterface
 from ..llm_cache import LLMCache
 import openai
 import time
@@ -35,9 +34,8 @@ def openai_stream_call(model,
 ### FirestoreCache Demo
 collection_name = "test_cache"
 firestore_service_account_file = "firestore_key.json"
-firestore_cache: DBIntegrationInterface = FirestoreCache(collection_name=collection_name,
-                                                         firestore_service_account_file=firestore_service_account_file)
-llm_cache = LLMCache(firestore_cache)
+llm_cache: LLMCache = FirestoreCache(collection_name=collection_name,
+                                     firestore_service_account_file=firestore_service_account_file)
 print("DEMO FOR FIRESTORE CACHE")
 print("------------------------")
 

@@ -1,5 +1,5 @@
 """This module implements a local cache using a JSON file."""
-from ..db_integration_interface import DBIntegrationInterface
+from ..llm_cache import LLMCache
 import json
 import logging
 import os
@@ -7,7 +7,7 @@ import os
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-class LocalCache(DBIntegrationInterface):
+class LocalCache(LLMCache):
   """
   Implements a local cache mechanism using a JSON file for storage.
 

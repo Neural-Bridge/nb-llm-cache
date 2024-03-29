@@ -4,3 +4,5 @@ __pycache__/
 test_cache.json
 *.env
 build/
+dist/
+nb_llm_cache.egg-info

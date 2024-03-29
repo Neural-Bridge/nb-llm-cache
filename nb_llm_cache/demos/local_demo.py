@@ -1,6 +1,5 @@
 """Demo for LocalCache"""
 from ..db_integrations.local_cache import LocalCache
-from ..db_integration_interface import DBIntegrationInterface
 from ..llm_cache import LLMCache
 import openai
 import time
@@ -18,8 +17,7 @@ def call_openai(model,
 
 ### LocalCache Demo
 cache_file_path = "test_cache.json"
-local_cache: DBIntegrationInterface = LocalCache(file_path=cache_file_path)
-llm_cache = LLMCache(local_cache)
+llm_cache: LLMCache = LocalCache(file_path=cache_file_path)
 print("DEMO FOR LOCAL CACHE")
 print("------------------------")
 start_time = time.time()

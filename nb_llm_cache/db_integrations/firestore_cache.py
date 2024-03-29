@@ -4,14 +4,14 @@ which is a subclass of the DBIntegrationInterface class.
 """
 from google.cloud import firestore
 from google.oauth2 import service_account
-from ..db_integration_interface import DBIntegrationInterface
+from ..llm_cache import LLMCache
 import logging
 import json
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-class FirestoreCache(DBIntegrationInterface):
+class FirestoreCache(LLMCache):
   """
   This class implements the DBIntegrationInterface class for Firestore.
   """
