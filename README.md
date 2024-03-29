@@ -49,7 +49,7 @@ For feature requests, please reach out to us via [this form]().
 Install via pip with just one command:
 
 ```
-pip install llm_cache
+pip install nb-llm-cache
 ```
 
 ## 🎉 Usage
@@ -61,14 +61,14 @@ LLMCache simplifies integrating efficient caching mechanisms into your applicati
 For applications requiring rapid access without external dependencies, LLMCache offers a local caching solution:
 
 ```python
-from db_integrations.local_cache import LocalCache
-from llm_cache import LLMCache
+from nb_llm_cache.db_integrations.local_cache import LocalCache
+from nb_llm_cache.llm_cache import LLMCache
 import openai
 
 def call_openai(model,
                 openai_messages,
                 temperature,
-                timeout=50):
+                timeout):
   client = openai.Client()
   completion = client.chat.completions.create(model=model,
                                               messages=openai_messages,
@@ -78,14 +78,14 @@ def call_openai(model,
 
 # Initialize the local cache
 cache_file_path = "test_cache.json"
-local_cache = LocalCache(file_path=cache_file_path)
-llm_cache = LLMCache(local_cache)
+llm_cache: LLMCache = LocalCache(file_path=cache_file_path)
 
 # Example function call using the local cache
 res = llm_cache.call(func=call_openai,
                      model="gpt-4",
                      openai_messages=[{"content": "Hello, how are you?", "role": "user"}],
                      temperature=0.8,
+                     timeout=50,
                      exclude_cache_params=["timeout"])
 ```
 
@@ -93,14 +93,14 @@ res = llm_cache.call(func=call_openai,
 
 
 ```python
-from db_integrations.firestore_cache import FirestoreCache
-from llm_cache import LLMCache
+from nb_llm_cache.db_integrations.firestore_cache import FirestoreCache
+from nb_llm_cache.llm_cache import LLMCache
 import openai
 
 def call_openai(model,
                 openai_messages,
                 temperature,
-                timeout=50):
+                timeout):
   client = openai.Client()
   completion = client.chat.completions.create(model=model,
                                               messages=openai_messages,
@@ -111,9 +111,8 @@ def call_openai(model,
 # Configure Firestore cache
 collection_name = "test_cache"
 firestore_service_account_file = "firestore_key.json"
-firestore_cache = FirestoreCache(collection_name=collection_name,
+llm_cache: LLMCache = FirestoreCache(collection_name=collection_name,
                                  firestore_service_account_file=firestore_service_account_file)
-llm_cache = LLMCache(firestore_cache)
 
 # Utilizing Firestore for caching
 res = llm_cache.call(func=call_openai,
@@ -203,10 +202,10 @@ LLM Cache is a Python-based caching system designed to efficiently store and ret
 
 ## Modules
 
-### DBIntegrationInterface
+### LLMCache
 
 - **Purpose**: Defines the interface for a cache.
-- **Description**: This abstract class outlines the basic structure for cache implementations, specifying methods for retrieving (`get_from_cache`) and adding data (`add_to_cache`) to the cache.
+- **Description**: This class outlines the basic structure for cache implementations, specifying abstract methods for retrieving (`get_from_cache`) and adding data (`add_to_cache`) to the cache.
 
 ### FirestoreCache
 
@@ -217,11 +216,6 @@ LLM Cache is a Python-based caching system designed to efficiently store and ret
 
 - **Purpose**: Implements caching using a local JSON file.
 - **Description**: Extends `DBIntegrationInterface` to offer a simple, file-based caching mechanism, ideal for lightweight applications or environments where cloud access is limited.
-
-### LLMCache
-
-- **Purpose**: A caching layer for function responses.
-- **Description**: This class uses a `DBIntegrationInterface` to cache and retrieve responses of functions based on their arguments. It supports features like retrying function calls and excluding specific arguments from cache keys.
 
 ## Features
 
@@ -236,8 +230,8 @@ LLM Cache is a Python-based caching system designed to efficiently store and ret
 To use LLM Cache in your project, clone this repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/Neural-Bridge/llm-cache.git
-cd llm-cache
+git clone https://github.com/Neural-Bridge/nb-llm-cache.git
+cd nb-llm-cache
 pip install -r requirements.txt
 ```
 
@@ -246,11 +240,10 @@ pip install -r requirements.txt
 1. **Initialization**:
 
    - Initialize the desired cache implementation (FirestoreCache or LocalCache) by providing necessary parameters like collection name or file path.
-   - Instantiate LLMCache with the cache object.
 
 2. **Caching Function Calls**:
 
-   - Use `LLMCache.call()` to call a function and cache its response. You can specify parameters to exclude from the cache key and define retry logic.
+   - Use `call()` to call a function and cache its response. You can specify parameters to exclude from the cache key and define retry logic.
 
 3. **Retrieving and Storing Data**:
    - Use `get_from_cache` and `add_to_cache` methods from your cache implementation to directly interact with the cache.
@@ -260,13 +253,11 @@ pip install -r requirements.txt
 ```python
 # Example of using LLMCache with LocalCache
 from db_integrations.local_cache import LocalCache
-from db_integration_interface import DBIntegrationInterface
 from llm_cache import LLMCache
 
 # Initialize the LocalCache
 cache_file_path = "test_cache.json"
-local_cache: DBIntegrationInterface = LocalCache(file_path=cache_file_path)
-llm_cache = LLMCache(local_cache)
+llm_cache: LLMCache = LocalCache(file_path=cache_file_path)
 
 # Function to cache
 def example_function(param1, param2):
@@ -305,6 +296,6 @@ To run these demos, first you need to install the OpenAI Python library and set 
 
 ```bash
 pip install openai==1.3.7
-python3 -m demos.firestore_demo.py
-python3 -m demos.local_demo.py
+python3 -m nb_llm_cache.demos.firestore_demo.py
+python3 -m nb_llm_cache.demos.local_demo.py
 ``` -->
